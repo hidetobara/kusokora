@@ -14,8 +14,8 @@ public class LayerService extends Service {
     WindowManager _wm;
      
     @Override
-    public void onStart(Intent intent, int startId) {
-        super.onStart(intent, startId);
+    public int onStartCommand(Intent intent, int flag, int startId) {
+        super.onStartCommand(intent, flag, startId);
         
         OpenCarView.imagesIndex = intent.getIntExtra("index", 0);
         
@@ -38,6 +38,8 @@ public class LayerService extends Service {
  
         // Viewを画面上に重ね合わせする
         _wm.addView(_view, params);
+        
+        return START_NOT_STICKY;
     }
  
     @Override
@@ -50,7 +52,8 @@ public class LayerService extends Service {
         super.onDestroy();
          
         // サービスが破棄されるときには重ね合わせしていたViewを削除する
-        _wm.removeView(_view);
+        if(_wm != null) _wm.removeView(_view);
+        _wm = null;
     }
  
     @Override

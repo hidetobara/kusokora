@@ -91,6 +91,8 @@ public class OpenCarView extends SurfaceView implements Callback, Runnable {
     	{
     		try
     		{
+    			if(_thread == null) break;
+    			
     			callDraw(_holder);
     			Thread.sleep(30);
     		}
